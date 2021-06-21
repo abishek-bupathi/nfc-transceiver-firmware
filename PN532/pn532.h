@@ -38,26 +38,35 @@
 #define IN_SELECT                       0x54
 #define IN_AUTO_POLL                    0x60
 
+class PN532{
 
-/*********** Function prototypes ***********/
+    public:
 
-// I2C functions
-int i2c_send(uint8_t data);
-int i2c_read(uint8_t command);
-bool is_device_read(void);
+    PN532(PinName i2c_sda,PinName i2c_scl);
 
-// NFC functions
-uint8_t get_firmware_version(void);
-uint8_t get_target_id(void);
-uint8_t read_iso14443A(uint8_t data);
-uint8_t write_iso14443A(uint8_t data);
-uint8_t read_ntag(uint8_t data);
-uint8_t write_ntag(uint8_t data);
-uint8_t read_mifare_classic(uint8_t data);
-uint8_t write_mifare_classic(uint8_t data);
-uint8_t read_mifare_ultralight(uint8_t data);
-uint8_t write_mifare_ultralight(uint8_t data);
+    void init();
 
+    // NFC functions
+    uint8_t get_firmware_version(void);
+    uint8_t get_target_id(void);
+    uint8_t read_iso14443A(uint8_t data);
+    uint8_t write_iso14443A(uint8_t data);
+    uint8_t read_ntag(uint8_t data);
+    uint8_t write_ntag(uint8_t data);
+    uint8_t read_mifare_classic(uint8_t data);
+    uint8_t write_mifare_classic(uint8_t data);
+    uint8_t read_mifare_ultralight(uint8_t data);
+    uint8_t write_mifare_ultralight(uint8_t data);
 
+    private:
+
+    I2C i2c;
+
+    // I2C functions
+    int i2c_write(uint8_t data);
+    int i2c_read(uint8_t command);
+    bool is_device_read(void);
+    
+};
 
 
