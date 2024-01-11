@@ -45,7 +45,7 @@
 
 /****************** Constants *******************/
 #define PN532_PREAMBLE                      0x00
-#define PN532_POSTABLE                      0x00
+#define PN532_POSTAMBLE                     0x00
 
 #define PN532_START_CODE_1                  0x00
 #define PN532_START_CODE_2                  0xFF
@@ -79,8 +79,8 @@ class PN532{
     I2C i2c;
 
     // I2C functions
-    int i2c_write(uint8_t data);
-    int i2c_read(uint8_t command);
+    int i2c_write_cmd(I2C i2c, uint8_t *cmd, uint8_t cmd_len);
+    int i2c_read_response(uint8_t command);
     bool is_device_read(void);
     
 };
