@@ -17,7 +17,6 @@ uint8_t PN532::get_firmware_version(void){
     packet[0] = PN532_PREAMBLE;
     packet[0] = 
 
-    
 }
 
 uint8_t PN532::get_target_id(void){
@@ -56,6 +55,7 @@ uint8_t PN532::write_mifare_ultralight(uint8_t data){
 
 }
 
+
 uint8_t PN532::write_cmd(){
 
 }
@@ -65,6 +65,7 @@ int i2c_write(uint8_t data){
 }
 
 int i2c_read(uint8_t *command){
+
 
 }
 

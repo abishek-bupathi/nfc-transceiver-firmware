@@ -53,6 +53,7 @@
 #define PN532_TFI_HOST_TO_PN532             0xD4
 #define PN532_TFI_PN532_TO_HOST             0xD5
 
+
 class PN532{
 
     public:
