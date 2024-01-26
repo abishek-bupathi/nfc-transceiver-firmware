@@ -54,6 +54,9 @@
 #define PN532_TFI_PN532_TO_HOST             0xD5
 
 
+const uint8_t ACK_FRAME[6] = {0x00, 0x00, 0xFF, 0x00, 0xFF, 0x00};
+const uint8_t FW_VER_FRAME[6] = {0x00, 0x00, 0xFF, 0x06, 0xFA, 0xD5};
+
 class PN532{
 
     public:
@@ -63,7 +66,7 @@ class PN532{
     void init();
 
     // NFC functions
-    uint8_t get_firmware_version(void);
+    uint32_t get_firmware_version(void);
     uint8_t get_target_id(void);
     uint8_t read_iso14443A(uint8_t data);
     uint8_t write_iso14443A(uint8_t data);
@@ -79,10 +82,10 @@ class PN532{
     I2C i2c;
 
     // I2C functions
-    int i2c_write_cmd(I2C i2c, uint8_t *cmd, uint8_t cmd_len);
-    int i2c_read_response(uint8_t command);
-    bool is_device_read(void);
-    
+    int i2c_write_cmd(char *cmd, uint8_t cmd_len);
+    int i2c_read_response(char *packet, uint8_t packet_len);
+    bool check_ack(void);
+    bool is_device_ready(void);
 };
 
 
