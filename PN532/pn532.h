@@ -91,6 +91,7 @@ class PN532{
 
     // NFC functions
     uint32_t get_firmware_version(void);
+
     uint8_t get_target_id(uint8_t baudRate, uint8_t* uid, uint8_t* uidLength);
     uint8_t set_sam_mode(uint8_t mode);
     uint8_t enable_rf_field(void);
@@ -115,7 +116,7 @@ class PN532{
     int i2c_read_response(char *packet, uint8_t packet_len);
     bool check_ack(void);
     bool is_device_ready(void);
-    
+
 };
 
 

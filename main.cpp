@@ -31,6 +31,7 @@ int main()
     char data[] = "123";
 
     nfc_tag.in_exchange_data(0x1, data, sizeof(data));
+
 }
     
 

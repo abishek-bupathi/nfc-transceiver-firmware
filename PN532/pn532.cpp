@@ -4,6 +4,7 @@
 #include <cstdint>
 #include <cstdio>
 
+
 PN532::PN532(PinName i2c_sda, PinName i2c_scl):i2c(i2c_sda, i2c_scl){
     init();
 }
@@ -13,6 +14,7 @@ void PN532::init(void){
 }
 
 uint32_t PN532::get_firmware_version(void){
+
 
     char cmd[1];
     cmd[0] = PN532_CMD_GET_FIRMWARE_VERSION;
@@ -149,34 +151,34 @@ uint8_t PN532::read_iso14443A(uint8_t data){
 uint8_t PN532::write_iso14443A(uint8_t data){
 
     return 1;
+
 }
 
 uint8_t PN532::read_ntag(uint8_t data){
 
     return 1;
+
 }
 
 uint8_t PN532::write_ntag(uint8_t data){
 
     return 1;
+
 }
 
 uint8_t PN532::read_mifare_classic(uint8_t data){
 
     return 1;
+
 }
 
 uint8_t PN532::write_mifare_classic(uint8_t data){
 
     return 1;
+
 }
 
 uint8_t PN532::read_mifare_ultralight(uint8_t data){
-
-    return 1;
-}
-
-uint8_t PN532::write_mifare_ultralight(uint8_t data){
 
     return 1;
 }
@@ -255,10 +257,12 @@ bool PN532::check_ack(void){
         }
     }
 
+
     return ack_valid;
 }
 
 bool PN532::is_device_ready(void){
+
 
     char rdy[0];
     
@@ -266,3 +270,4 @@ bool PN532::is_device_ready(void){
     
     return rdy[0] & 0x1; 
 } 
+
