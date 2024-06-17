@@ -53,8 +53,32 @@
 #define PN532_TFI_HOST_TO_PN532             0xD4
 #define PN532_TFI_PN532_TO_HOST             0xD5
 
+#define PN532_RF_FIELD_ITEM                 0x01
+#define PN532_RF_FIELD_ENABLE               0x01
+
+#define PN532_SAM_MODE_NORMAL               0x01
+#define PN532_SAM_TIMEOUT                   0xFF
+#define PN532_SAM_IRQ                       0x01
+
+#define PN532_MIFARE_ISO14443A              0x00
+
 const uint8_t ACK_FRAME[6] = {0x00, 0x00, 0xFF, 0x00, 0xFF, 0x00};
 const uint8_t FW_VER_FRAME[6] = {0x00, 0x00, 0xFF, 0x06, 0xFA, 0xD5};
+
+typedef struct{
+        uint8_t mErr;
+        uint8_t mField;
+        uint8_t mNbTg;
+        uint8_t mTg1;
+        uint8_t mBrRx1;
+        uint8_t mBrTx1;
+        uint8_t mType1;
+        uint8_t mTg2;
+        uint8_t mBrRx2;
+        uint8_t mBrTx2;
+        uint8_t mType2;
+        uint8_t mSam;
+} genStatus_t;
 
 class PN532{
 
@@ -67,7 +91,12 @@ class PN532{
 
     // NFC functions
     uint32_t get_firmware_version(void);
-    uint8_t get_target_id(void);
+    uint8_t get_target_id(uint8_t baudRate, uint8_t* uid, uint8_t* uidLength);
+    uint8_t set_sam_mode(uint8_t mode);
+    uint8_t enable_rf_field(void);
+    uint8_t get_target_type(void);
+    genStatus_t get_general_status(void);
+    uint8_t in_exchange_data(uint8_t targetNo, char* data, uint8_t dataLen);
     uint8_t read_iso14443A(uint8_t data);
     uint8_t write_iso14443A(uint8_t data);
     uint8_t read_ntag(uint8_t data);

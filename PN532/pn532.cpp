@@ -1,5 +1,6 @@
 #include "mbed.h"
 #include "pn532.h"
+#include <algorithm>
 #include <cstdint>
 #include <cstdio>
 
@@ -42,7 +43,102 @@ uint32_t PN532::get_firmware_version(void){
     return fw_ver;
 }
 
-uint8_t PN532::get_target_id(void){
+uint8_t PN532::enable_rf_field(void){
+
+    char cmd[3];
+    cmd[0] = PN532_CMD_RF_CONFIGURATION;
+    cmd[1] = PN532_RF_FIELD_ITEM;
+    cmd[2] = PN532_RF_FIELD_ENABLE;
+
+    uint8_t ack = i2c_write_cmd(cmd, sizeof(cmd));
+
+    char response[7];
+
+    i2c_read_response(response, sizeof(response));
+
+    return ack;
+}
+
+uint8_t get_target_type(void){
+    return 1;
+}
+
+uint8_t PN532::set_sam_mode(uint8_t mode){
+
+    char cmd[4];
+    cmd[0] = PN532_CMD_SAM_CONFIGURATION;
+    cmd[1] = mode;
+    cmd[2] = PN532_SAM_TIMEOUT;
+    cmd[3] = PN532_SAM_IRQ;
+
+    uint8_t ack = i2c_write_cmd(cmd, sizeof(cmd));
+
+    char response[7];
+
+    i2c_read_response(response, sizeof(response));
+
+    return 1;
+}
+
+genStatus_t PN532::get_general_status(void){
+
+    char cmd[1];
+    cmd[0] = PN532_CMD_GET_GENERAL_STATUS;
+    uint32_t fw_ver;
+
+    uint8_t ack = i2c_write_cmd(cmd, sizeof(cmd));
+
+    char response[20];
+
+    i2c_read_response(response, sizeof(response));
+
+    printf("%s", response);
+    // Checking data frame info for fw version
+    //for(int i=0; i < 12; i++){
+    //    if(response[i] != FW_VER_FRAME[i]){
+    //        return 0xDEADBEEF;
+    //    }
+    //}
+
+    genStatus_t status;
+
+    return status;
+}
+
+uint8_t PN532::get_target_id(uint8_t baudRate, uint8_t* uid, uint8_t* uidLength){
+
+    char cmd[3];
+    cmd[0] = PN532_CMD_IN_LIST_PASSIVE_TARGET;
+    cmd[1] = 0x1;
+    cmd[2] = baudRate;
+
+    uint8_t ack = i2c_write_cmd(cmd, sizeof(cmd));
+
+    char response[18];
+
+    i2c_read_response(response, sizeof(response));
+
+
+    return 1;
+}
+
+uint8_t PN532::in_exchange_data(uint8_t targetNo, char* data, uint8_t dataLen){
+
+    char cmd[dataLen + 2];
+    cmd[0] = PN532_CMD_IN_DATA_EXCHANGE;
+    cmd[1] = targetNo;
+    
+    std::copy(cmd, cmd+2, data);
+
+    printf("%s", cmd);
+
+    uint8_t ack = i2c_write_cmd(cmd, sizeof(cmd));
+
+    char response[18];
+
+    i2c_read_response(response, sizeof(response));
+
+    
     return 1;
 }
 

@@ -12,15 +12,25 @@ int main()
     printf("\n\n");
     printf("Found chip: PN5%x\n", (fw_ver>>24) & 0xFF);
     printf("Firmware version: %d.%d", (fw_ver>>16) & 0xFF, (fw_ver>>8) & 0xFF);
+    
+    uint8_t ack;
 
-    // Initialise the digital pin LED1 as an outputs
-    //DigitalOut led(LED1);s
+    //uint8_t ack = nfc_tag.set_sam_mode(PN532_SAM_MODE_NORMAL);
+
+    //ack = nfc_tag.enable_rf_field();
+
    
-    //while (true) {
-    //    led = !led;
-    //   ThisThread::sleep_for(500ms);   
-    //}
+    //genStatus_t status = nfc_tag.get_general_status();
+
+    uint8_t uid[] = { 0, 0, 0, 0, 0, 0, 0 };  // Buffer to store the returned UID
+    uint8_t uidLength;
 
     
+    ack = nfc_tag.get_target_id(PN532_MIFARE_ISO14443A, uid, &uidLength);
+
+    char data[] = "123";
+
+    nfc_tag.in_exchange_data(0x1, data, sizeof(data));
 }
+    
 
